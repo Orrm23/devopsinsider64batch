@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps & AI Community Hub</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            color: #e8e9f3;
+            line-height: 1.6;
+        }
+        
+        .navbar {
+            background: rgba(15, 23, 42, 0.95);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00d9ff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #00d9ff, #0099cc);
+            color: #0a0e27;
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+        }
+        
+        .btn-primary:hover {
+            box-shadow: 0 0 30px rgba(0, 217, 255, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline {
+            border: 2px solid #00d9ff;
+            color: #00d9ff;
+            background: transparent;
+        }
+        
+        .btn-outline:hover {
+            background: rgba(0, 217, 255, 0.1);
+        }
+        
+        .hero {
+            padding: 4rem 2rem;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(59, 130, 246, 0.1) 0%, transparent 100%);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #00d9ff, #8338ec);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            color: #a8afc7;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: #e8e9f3;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            background: rgba(59, 130, 246, 0.1);
+            color: #e8e9f3;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn.active {
+            border-color: #00d9ff;
+            background: rgba(0, 217, 255, 0.2);
+            color: #00d9ff;
+        }
+        
+        .filter-btn:hover {
+            border-color: #00d9ff;
+            background: rgba(0, 217, 255, 0.15);
+        }
+        
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .service-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(131, 56, 236, 0.05));
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #00d9ff, transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .service-card:hover {
+            border-color: #00d9ff;
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.2);
+            transform: translateY(-4px);
+        }
+        
+        .service-card:hover::before {
+            opacity: 1;
+        }
+        
+        .service-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .service-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #e8e9f3;
+        }
+        
+        .service-desc {
+            color: #a8afc7;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+        
+        .service-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        
+        .tag {
+            background: rgba(0, 217, 255, 0.15);
+            color: #00d9ff;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+        
+        .service-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #717483;
+        }
+        
+        .rating {
+            color: #fca311;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: rgba(59, 130, 246, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        
+        .stat-card {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00d9ff;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: #a8afc7;
+            font-size: 0.95rem;
+        }
+        
+        .footer {
+            background: rgba(15, 23, 42, 0.95);
+            border-top: 1px solid rgba(59, 130, 246, 0.2);
+            padding: 2rem;
+            text-align: center;
+            color: #717483;
+            margin-top: 3rem;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(131, 56, 236, 0.1));
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .cta-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-section p {
+            color: #a8afc7;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">
+            <span>⚡</span> DevOps & AI Hub
+        </div>
+        <div class="nav-actions">
+            <button class="btn btn-outline">Login</button>
+            <button class="btn btn-primary">Sign Up</button>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Community-Driven DevOps & AI Platform</h1>
+        <p>Share expertise, discover services, and collaborate on AI, DevOps, MLOps, and AIOps solutions</p>
+        <div class="hero-actions">
+            <button class="btn btn-primary">Share a Service</button>
+            <button class="btn btn-outline">Browse Services</button>
+        </div>
+    </section>
+    
+    <!-- Stats Section -->
+    <div class="container">
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number">2,450+</div>
+                <div class="stat-label">Services Shared</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">12K+</div>
+                <div class="stat-label">Active Members</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">4.8★</div>
+                <div class="stat-label">Avg Rating</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">150K+</div>
+                <div class="stat-label">Total Views</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Featured Services -->
+    <div class="container">
+        <h2 class="section-title">Featured Services</h2>
+        
+        <div class="filters">
+            <button class="filter-btn active">All</button>
+            <button class="filter-btn">DevOps</button>
+            <button class="filter-btn">MLOps</button>
+            <button class="filter-btn">AIOps</button>
+            <button class="filter-btn">AI</button>
+        </div>
+        
+        <div class="service-grid">
+            <!-- Service 1 -->
+            <div class="service-card">
+                <div class="service-icon">⚙️</div>
+                <div class="service-title">Kubernetes Cluster Setup</div>
+                <div class="service-desc">Complete K8s cluster setup with ArgoCD and monitoring</div>
+                <div class="service-tags">
+                    <span class="tag">kubernetes</span>
+                    <span class="tag">devops</span>
+                </div>
+                <div class="service-meta">
+                    <span class="rating">⭐ 4.8</span>
+                    <span>👁️ 2,450</span>
+                </div>
+            </div>
+            
+            <!-- Service 2 -->
+            <div class="service-card">
+                <div class="service-icon">🤖</div>
+                <div class="service-title">MLOps Pipeline with MLflow</div>
+                <div class="service-desc">End-to-end ML pipeline orchestration and tracking</div>
+                <div class="service-tags">
+                    <span class="tag">mlops</span>
+                    <span class="tag">mlflow</span>
+                </div>
+                <div class="service-meta">
+                    <span class="rating">⭐ 4.6</span>
+                    <span>👁️ 1,890</span>
+                </div>
+            </div>
+            
+            <!-- Service 3 -->
+            <div class="service-card">
+                <div class="service-icon">🚀</div>
+                <div class="service-title">AIOps Incident Response</div>
+                <div class="service-desc">AI-driven incident detection and auto-remediation</div>
+                <div class="service-tags">
+                    <span class="tag">aiops</span>
+                    <span class="tag">monitoring</span>
+                </div>
+                <div class="service-meta">
+                    <span class="rating">⭐ 4.9</span>
+                    <span>👁️ 3,200</span>
+                </div>
+            </div>
+            
+            <!-- Service 4 -->
+            <div class="service-card">
+                <div class="service-icon">🔄</div>
+                <div class="service-title">CI/CD with GitLab</div>
+                <div class="service-desc">Advanced GitLab CI/CD pipelines and deployment strategies</div>
+                <div class="service-tags">
+                    <span class="tag">cicd</span>
+                    <span class="tag">gitlab</span>
+                </div>
+                <div class="service-meta">
+                    <span class="rating">⭐ 4.7</span>
+                    <span>👁️ 2,100</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- CTA Section -->
+    <div class="container">
+        <div class="cta-section">
+            <h3>Ready to Share Your Expertise?</h3>
+            <p>Join thousands of DevOps and AI professionals sharing their knowledge</p>
+            <button class="btn btn-primary">Share Your Service</button>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 DevOps & AI Hub. Built with ❤️ by the community</p>
+    </footer>
+</body>
+</html>
